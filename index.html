@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PENAMPIL SOAL ULANGAN BAB 4. MUSYAWARAH UNTUK MUFAKAT</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Poppins Bold & Nunito Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,600;0,6..12,700;0,6..12,800;1,6..12,400&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#263B5E',
+                        skyblue: '#65B7E8',
+                        sunyellow: '#FFD166',
+                        softcream: '#FFF9EF',
+                        darktext: '#263238',
+                        leafgreen: '#56A878',
+                        warmorange: '#F4A261',
+                        alertred: '#E76F51',
+                    },
+                    fontFamily: {
+                        heading: ['Poppins', 'sans-serif'],
+                        body: ['"Nunito Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            background-color: #FFF9EF;
+            color: #263238;
+            overflow-x: hidden;
+            user-select: none;
+        }
+
+        h1, h2, h3, .font-heading {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Animasi berkedip halus untuk 15 detik terakhir */
+        @keyframes pulseUrgent {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(231, 111, 81, 0.7);
+            }
+            50% {
+                transform: scale(1.04);
+                box-shadow: 0 0 20px 6px rgba(231, 111, 81, 0.45);
+            }
+        }
+
+        .timer-urgent {
+            animation: pulseUrgent 1s infinite ease-in-out;
+        }
+
+        /* Custom scrollbar untuk soal panjang jika layar kecil */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFF9EF;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94A3B8;
+        }
+
+        /* Transisi kartu soal */
+        .fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between bg-softcream text-darktext">
+
+    <!-- ==================== 1. HALAMAN PEMBUKA (START SCREEN) ==================== -->
+    <div id="start-screen" class="min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
+        <div class="w-full max-w-5xl bg-white rounded-3xl shadow-xl border-2 border-skyblue/30 overflow-hidden fade-in">
+            <!-- Top Banner -->
+            <div class="bg-navy text-white px-6 py-8 sm:px-10 sm:py-10 text-center relative overflow-hidden">
+                <div class="absolute -top-10 -left-10 w-36 h-36 bg-skyblue/20 rounded-full"></div>
+                <div class="absolute -bottom-12 -right-8 w-44 h-44 bg-sunyellow/20 rounded-full"></div>
+                
+                <span class="inline-block bg-sunyellow text-navy font-heading font-bold text-xs sm:text-sm px-4 py-1.5 rounded-full uppercase tracking-wider mb-3 shadow-sm">
+                    Pendidikan Pancasila • Kelas VI
+                </span>
+                <h1 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+                    PENAMPIL SOAL PENDIDIKAN PANCASILA
+                </h1>
+                <p class="text-skyblue font-heading font-semibold text-base sm:text-xl mt-2">
+                    ULANGAN BAB 4. MUSYAWARAH UNTUK MUFAKAT
+                </p>
+                <p class="text-white/80 text-sm sm:text-base mt-1">
+                    Materi: Pengambilan Keputusan dan Menghadapi Perbedaan Pendapat
+                </p>
+            </div>
+
+            <!-- Content Body -->
+            <div class="p-6 sm:p-8 lg:p-10 space-y-8">
+                <!-- Info Cards -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-softcream border border-sunyellow/60 rounded-2xl p-4 text-center">
+                        <p class="text-xs sm:text-sm font-bold text-navy/70 uppercase">Mata Pelajaran</p>
+                        <p class="font-heading font-bold text-base sm:text-lg text-navy mt-1">Pendidikan Pancasila</p>
+                    </div>
+                    <div class="bg-softcream border border-skyblue/50 rounded-2xl p-4 text-center">
+                        <p class="text-xs sm:text-sm font-bold text-navy/70 uppercase">Jumlah Soal</p>
+                        <p id="info-total-questions" class="font-heading font-extrabold text-xl sm:text-2xl text-skyblue mt-1">25 Soal</p>
+                    </div>
+                    <div class="bg-softcream border border-leafgreen/50 rounded-2xl p-4 text-center">
+                        <p class="text-xs sm:text-sm font-bold text-navy/70 uppercase">Durasi Per Soal</p>
+                        <p id="info-duration-per-q" class="font-heading font-extrabold text-xl sm:text-2xl text-leafgreen mt-1">02:00</p>
+                    </div>
+                    <div class="bg-softcream border border-warmorange/50 rounded-2xl p-4 text-center">
+                        <p class="text-xs sm:text-sm font-bold text-navy/70 uppercase">Total Estimasi</p>
+                        <p id="info-total-time" class="font-heading font-extrabold text-xl sm:text-2xl text-warmorange mt-1">50 Menit</p>
+                    </div>
+                </div>
+
+                <!-- Panel Pengaturan Durasi -->
+                <div class="bg-slate-50 rounded-2xl p-5 sm:p-6 border border-slate-200">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                        <div>
+                            <h2 class="text-lg sm:text-xl font-bold text-navy flex items-center gap-2">
+                                <svg class="w-6 h-6 text-skyblue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Pengaturan Durasi Pengerjaan Soal
+                            </h2>
+                            <p class="text-sm text-slate-600">Pilih durasi standar atau atur waktu secara manual untuk setiap soal.</p>
+                        </div>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-navy/10 text-navy">
+                            Default: 2 Menit (120 Detik)
+                        </span>
+                    </div>
+
+                    <!-- Preset Buttons -->
+                    <div id="preset-buttons-start" class="grid grid-cols-3 sm:grid-cols-5 gap-2.5 sm:gap-3 mb-5">
+                        <!-- Diisi otomatis via JS -->
+                    </div>
+
+                    <!-- Manual Duration Input -->
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-sunyellow"></span>
+                            <span class="font-bold text-sm sm:text-base text-navy">Durasi Manual:</span>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+                            <div class="flex items-center gap-1.5">
+                                <input type="number" id="start-manual-min" min="0" max="60" value="2" class="w-20 px-3 py-2 border-2 border-slate-300 rounded-xl text-center font-heading font-bold text-navy focus:border-skyblue focus:outline-none">
+                                <span class="text-sm font-semibold text-slate-600">Menit</span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <input type="number" id="start-manual-sec" min="0" max="59" value="0" class="w-20 px-3 py-2 border-2 border-slate-300 rounded-xl text-center font-heading font-bold text-navy focus:border-skyblue focus:outline-none">
+                                <span class="text-sm font-semibold text-slate-600">Detik</span>
+                            </div>
+                            <button type="button" onclick="applyStartManualDuration()" class="px-4 py-2 bg-skyblue hover:bg-skyblue/90 text-white font-bold text-sm rounded-xl transition shadow-sm cursor-pointer">
+                                Terapkan Manual
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+                    <button type="button" onclick="toggleFullscreen()" class="w-full sm:w-auto px-6 py-4 bg-slate-200 hover:bg-slate-300 text-navy font-heading font-bold rounded-2xl transition flex items-center justify-center gap-2 cursor-pointer">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
+                        </svg>
+                        MODE LAYAR PENUH
+                    </button>
+                    <button type="button" onclick="startPresentation()" class="w-full sm:w-auto px-10 py-4 bg-leafgreen hover:bg-leafgreen/90 text-white font-heading font-extrabold text-lg sm:text-xl rounded-2xl shadow-lg shadow-leafgreen/30 transition transform hover:-translate-y-0.5 flex items-center justify-center gap-3 cursor-pointer">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
+                        </svg>
+                        MULAI PENAYANGAN
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 2. HALAMAN SOAL (QUIZ DISPLAY SCREEN) ==================== -->
+    <div id="quiz-screen" class="hidden min-h-screen flex flex-col justify-between p-3 sm:p-5 lg:p-6 max-w-[1600px] w-full mx-auto">
+        
+        <!-- HEADER -->
+        <header class="bg-navy text-white rounded-2xl sm:rounded-3xl px-4 py-3 sm:px-8 sm:py-4 shadow-md flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3 sm:gap-4">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-sunyellow text-navy flex items-center justify-center font-heading font-extrabold text-lg sm:text-xl shadow-inner shrink-0">
+                    P4
+                </div>
+                <div>
+                    <h1 class="font-heading font-bold text-sm sm:text-lg lg:text-xl tracking-wide text-sunyellow uppercase leading-tight">
+                        PENAMPIL SOAL ULANGAN BAB 4. MUSYAWARAH UNTUK MUFAKAT
+                    </h1>
+                    <p class="text-xs sm:text-sm text-skyblue font-semibold">
+                        Pendidikan Pancasila Kelas VI • Sumatif Lingkup Materi
+                    </p>
+                </div>
+            </div>
+
+            <!-- Timer Digital & Status -->
+            <div class="flex items-center gap-3 sm:gap-4 ml-auto">
+                <div id="paused-badge" class="hidden px-3 py-1 rounded-full bg-sunyellow text-navy font-heading font-bold text-xs sm:text-sm animate-pulse">
+                    DIJEDA
+                </div>
+                <div id="timer-box" class="bg-skyblue text-white px-4 py-2 sm:px-6 sm:py-2.5 rounded-2xl flex items-center gap-2.5 shadow-inner transition-colors duration-300">
+                    <svg class="w-6 h-6 sm:w-7 sm:h-7 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span id="timer-display" class="font-heading font-extrabold text-2xl sm:text-3xl lg:text-4xl tracking-wider tabular-nums">
+                        02:00
+                    </span>
+                </div>
+            </div>
+        </header>
+
+        <!-- AREA UTAMA (KARTU SOAL) -->
+        <main class="flex-1 flex items-center justify-center my-3 sm:my-5">
+            <div id="question-card" class="w-full h-full bg-white rounded-3xl shadow-xl border-2 border-slate-100 p-5 sm:p-8 lg:p-10 flex flex-col justify-between fade-in">
+                
+                <!-- Nomor Soal & Petunjuk Singkat -->
+                <div>
+                    <div class="flex items-center justify-between gap-4 mb-4 sm:mb-6">
+                        <span id="question-number-badge" class="inline-flex items-center gap-2 bg-navy text-white font-heading font-bold text-base sm:text-xl px-5 py-2 rounded-2xl shadow-sm">
+                            Soal Nomor 1
+                        </span>
+                        <span class="text-xs sm:text-sm font-semibold text-slate-400 hidden sm:inline">
+                            Pilihlah satu jawaban yang paling tepat (a, b, c, atau d)
+                        </span>
+                    </div>
+
+                    <!-- Teks Pertanyaan (Mendukung daftar bernomor rapi) -->
+                    <div id="question-text-container" class="text-darktext text-xl sm:text-2xl lg:text-[28px] font-bold leading-snug sm:leading-relaxed mb-6 sm:mb-8">
+                        <!-- Konten pertanyaan dirender di sini -->
+                    </div>
+                </div>
+
+                <!-- Pilihan Jawaban A, B, C, D -->
+                <div id="options-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-5 mt-auto">
+                    <!-- Pilihan jawaban dirender di sini -->
+                </div>
+
+            </div>
+        </main>
+
+        <!-- FOOTER (PROGRES & TOMBOL NAVIGASI) -->
+        <footer class="bg-white rounded-2xl sm:rounded-3xl px-4 py-3 sm:px-6 sm:py-4 shadow-md border border-slate-200 space-y-3">
+            
+            <!-- Progress Bar & Indikator Posisi -->
+            <div class="flex items-center gap-4">
+                <span id="progress-label" class="font-heading font-extrabold text-xs sm:text-sm lg:text-base text-navy whitespace-nowrap">
+                    SOAL 01 DARI 25
+                </span>
+                <div class="flex-1 h-3 sm:h-4 bg-slate-200 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="h-full bg-leafgreen rounded-full transition-all duration-300" style="width: 4%;"></div>
+                </div>
+                <span id="progress-percent" class="font-heading font-bold text-xs sm:text-sm text-slate-500 whitespace-nowrap">
+                    4%
+                </span>
+            </div>
+
+            <!-- Baris Tombol Navigasi -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+                <!-- Navigasi Kiri: Sebelumnya & Selanjutnya -->
+                <div class="flex items-center gap-2">
+                    <button id="btn-prev" type="button" onclick="prevQuestion()" class="px-3.5 py-2.5 sm:px-5 sm:py-3 rounded-xl font-heading font-bold text-xs sm:text-sm bg-navy text-white hover:bg-navy/90 disabled:opacity-40 disabled:cursor-not-allowed transition flex items-center gap-1.5 cursor-pointer">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        <span>SEBELUMNYA</span>
+                    </button>
+
+                    <button id="btn-next" type="button" onclick="nextQuestion()" class="px-3.5 py-2.5 sm:px-5 sm:py-3 rounded-xl font-heading font-bold text-xs sm:text-sm bg-navy text-white hover:bg-navy/90 disabled:opacity-40 disabled:cursor-not-allowed transition flex items-center gap-1.5 cursor-pointer">
+                        <span>SELANJUTNYA</span>
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Navigasi Tengah: Jeda/Lanjutkan & Ulangi Waktu -->
+                <div class="flex items-center gap-2">
+                    <button id="btn-pause-resume" type="button" onclick="togglePauseResume()" class="px-3.5 py-2.5 sm:px-5 sm:py-3 rounded-xl font-heading font-bold text-xs sm:text-sm bg-warmorange text-white hover:bg-warmorange/90 transition flex items-center gap-1.5 cursor-pointer">
+                        <svg id="icon-pause" class="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span id="text-pause-resume">JEDA</span>
+                    </button>
+
+                    <button type="button" onclick="resetCurrentTimer()" class="px-3.5 py-2.5 sm:px-5 sm:py-3 rounded-xl font-heading font-bold text-xs sm:text-sm bg-skyblue text-white hover:bg-skyblue/90 transition flex items-center gap-1.5 cursor-pointer">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                        <span>ULANGI WAKTU</span>
+                    </button>
+                </div>
+
+                <!-- Navigasi Kanan: Pengaturan Waktu & Fullscreen -->
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="openTimeSettingsModal()" class="px-3.5 py-2.5 sm:px-5 sm:py-3 rounded-xl font-heading font-bold text-xs sm:text-sm bg-sunyellow text-navy hover:bg-sunyellow/90 transition flex items-center gap-1.5 cursor-pointer">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span>PENGATURAN WAKTU</span>
+                    </button>
+
+                    <button type="button" onclick="toggleFullscreen()" class="px-3.5 py-2.5 sm:px-5 sm:py-3 rounded-xl font-heading font-bold text-xs sm:text-sm bg-slate-200 text-navy hover:bg-slate-300 transition flex items-center gap-1.5 cursor-pointer">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
+                        </svg>
+                        <span>FULLSCREEN</span>
+                    </button>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ==================== 3. HALAMAN PENUTUP (END SCREEN) ==================== -->
+    <div id="end-screen" class="hidden min-h-screen flex items-center justify-center p-4 sm:p-8">
+        <div class="w-full max-w-3xl bg-white rounded-3xl shadow-2xl border-2 border-leafgreen/40 p-8 sm:p-12 text-center fade-in">
+            <div class="w-24 h-24 bg-leafgreen/15 text-leafgreen rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-14 h-14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+
+            <span class="inline-block bg-sunyellow text-navy font-heading font-bold text-xs sm:text-sm px-4 py-1.5 rounded-full uppercase tracking-wider mb-3">
+                Pendidikan Pancasila Kelas VI • Bab 4
+            </span>
+
+            <h1 class="font-heading font-extrabold text-3xl sm:text-5xl text-navy mb-3">
+                WELL DONE!
+            </h1>
+            <h2 class="font-heading font-bold text-xl sm:text-2xl text-leafgreen mb-2">
+                SELURUH SOAL TELAH DITAMPILKAN.
+            </h2>
+            <p class="text-slate-600 text-base sm:text-lg mb-8">
+                Thank You for Your Participation! Semua 25 soal Ulangan Bab 4 (Musyawarah untuk Mufakat) telah selesai ditayangkan.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+                <button type="button" onclick="reviewQuestions()" class="w-full sm:w-auto px-6 py-3.5 bg-skyblue hover:bg-skyblue/90 text-white font-heading font-bold rounded-2xl transition shadow-md cursor-pointer">
+                    LIHAT KEMBALI SOAL
+                </button>
+                <button type="button" onclick="backToStart()" class="w-full sm:w-auto px-6 py-3.5 bg-sunyellow hover:bg-sunyellow/90 text-navy font-heading font-bold rounded-2xl transition shadow-md cursor-pointer">
+                    KEMBALI KE AWAL
+                </button>
+                <button type="button" onclick="finishSession()" class="w-full sm:w-auto px-6 py-3.5 bg-navy hover:bg-navy/90 text-white font-heading font-bold rounded-2xl transition shadow-md cursor-pointer">
+                    SELESAI
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL PENGATURAN WAKTU SAAT TAYANG ==================== -->
+    <div id="time-modal" class="hidden fixed inset-0 z-50 bg-navy/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 fade-in">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-heading font-bold text-xl sm:text-2xl text-navy">
+                    Pengaturan Durasi Soal
+                </h3>
+                <button type="button" onclick="closeTimeSettingsModal()" class="p-2 rounded-xl hover:bg-slate-100 text-slate-500 cursor-pointer">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <p class="text-sm text-slate-600 mb-4">
+                Perubahan durasi akan langsung diterapkan pada <strong>soal saat ini</strong> (timer diatur ulang) dan <strong>seluruh soal berikutnya</strong>.
+            </p>
+
+            <!-- Preset Grid di Modal -->
+            <div id="preset-buttons-modal" class="grid grid-cols-3 gap-2.5 mb-5">
+                <!-- Diisi via JS -->
+            </div>
+
+            <!-- Input Manual di Modal -->
+            <div class="bg-softcream p-4 rounded-2xl border border-sunyellow/50 mb-6">
+                <label class="block text-sm font-bold text-navy mb-2">Atau Masukkan Durasi Manual:</label>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1.5">
+                        <input type="number" id="modal-manual-min" min="0" max="60" value="2" class="w-20 px-3 py-2 border-2 border-slate-300 rounded-xl text-center font-heading font-bold text-navy bg-white">
+                        <span class="text-sm font-semibold text-slate-600">Menit</span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <input type="number" id="modal-manual-sec" min="0" max="59" value="0" class="w-20 px-3 py-2 border-2 border-slate-300 rounded-xl text-center font-heading font-bold text-navy bg-white">
+                        <span class="text-sm font-semibold text-slate-600">Detik</span>
+                    </div>
+                    <button type="button" onclick="applyModalManualDuration()" class="ml-auto px-4 py-2 bg-leafgreen hover:bg-leafgreen/90 text-white font-bold text-sm rounded-xl transition cursor-pointer">
+                        Simpan
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex justify-end">
+                <button type="button" onclick="closeTimeSettingsModal()" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-navy font-heading font-bold text-sm rounded-xl transition cursor-pointer">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== NOTIFIKASI TOAST CUSTOM (PENGGANTI ALERT) ==================== -->
+    <div id="toast-notification" class="hidden fixed bottom-6 right-6 z-50 bg-navy text-white px-5 py-3.5 rounded-2xl shadow-xl border border-skyblue/40 flex items-center gap-3 transition-all duration-300">
+        <span class="w-3 h-3 rounded-full bg-sunyellow"></span>
+        <span id="toast-message" class="font-semibold text-sm">Pesan notifikasi</span>
+    </div>
+
+    <!-- ==================== SCRIPT LOGIKA & DATA SOAL ==================== -->
+    <script>
+        /**
+         * DATA SOAL LENGKAP (25 SOAL)
+         * Diekstrak secara akurat dari dokumen: ULANGAN BAB 4.docx
+         * Mata Pelajaran: Pendidikan Pancasila Kelas VI
+         * Bab 4: Ayo Bermusyawarah
+         */
+        const questionsData = [
+            {
+                number: 1,
+                question: "Jika peserta musyawarah telah menyampaikan pendapat tetapi belum mencapai kesepakatan, cara pengambilan keputusan yang dapat dilakukan adalah ....",
+                options: {
+                    a: "menunjuk satu orang untuk menentukan keputusan",
+                    b: "membatalkan seluruh kegiatan",
+                    c: "melakukan pemungutan suara",
+                    d: "mengikuti pendapat peserta yang paling tua"
+                }
+            },
+            {
+                number: 2,
+                question: "Dalam pemungutan suara, keputusan ditentukan berdasarkan ....",
+                options: {
+                    a: "pilihan yang memperoleh suara terbanyak",
+                    b: "pilihan ketua musyawarah",
+                    c: "pilihan peserta yang paling berani",
+                    d: "pilihan peserta yang pertama berbicara"
+                }
+            },
+            {
+                number: 3,
+                question: "Istilah yang digunakan untuk menyebut kesepakatan bersama dalam musyawarah adalah ....",
+                options: {
+                    a: "perdebatan",
+                    b: "pemungutan suara",
+                    c: "perbedaan",
+                    d: "mufakat"
+                }
+            },
+            {
+                number: 4,
+                question: "Wira dan teman-temannya bermusyawarah untuk menentukan kegiatan ....",
+                options: {
+                    a: "peringatan hari kemerdekaan",
+                    b: "pentas seni di sekolah",
+                    c: "pemilihan ketua kelas",
+                    d: "kegiatan liburan sekolah"
+                }
+            },
+            {
+                number: 5,
+                question: "Dalam cerita “Suara Terbanyak”, Danu mengusulkan agar pentas seni menampilkan ....",
+                options: {
+                    a: "pertunjukan tari daerah",
+                    b: "pertunjukan drama",
+                    c: "permainan tradisional",
+                    d: "pertunjukan musik modern"
+                }
+            },
+            {
+                number: 6,
+                question: "Danu merasa marah ketika usulannya tidak diterima. Hal tersebut menunjukkan bahwa Danu ....",
+                options: {
+                    a: "sudah menerima keputusan bersama",
+                    b: "menghargai pendapat teman-temannya",
+                    c: "merasa kecewa karena pendapatnya tidak dipilih",
+                    d: "ingin membantu teman-temannya"
+                }
+            },
+            {
+                number: 7,
+                question: "Ketika seseorang tidak setuju dengan pendapat peserta lain, sikap yang sebaiknya dilakukan adalah ....",
+                options: {
+                    a: "meninggalkan musyawarah",
+                    b: "mengejek pendapat tersebut",
+                    c: "memaksakan pendapat sendiri",
+                    d: "tetap menghargai pendapat orang lain"
+                }
+            },
+            {
+                number: 8,
+                question: "Wira berusaha menenangkan Danu ketika Danu marah. Sikap Wira menunjukkan bahwa ia ....",
+                options: {
+                    a: "ingin membatalkan musyawarah",
+                    b: "peduli terhadap temannya dan berusaha menjaga suasana musyawarah",
+                    c: "ingin agar pendapat Danu selalu diterima",
+                    d: "tidak menyukai perbedaan pendapat"
+                }
+            },
+            {
+                number: 9,
+                question: "Jika peserta musyawarah terus memaksakan pendapat masing-masing, kemungkinan yang terjadi adalah ....",
+                options: {
+                    a: "keputusan lebih cepat disepakati",
+                    b: "semua peserta merasa puas",
+                    c: "suasana menjadi tegang dan musyawarah sulit mencapai kesepakatan",
+                    d: "perbedaan pendapat langsung hilang"
+                }
+            },
+            {
+                number: 10,
+                question: "Berikut ini yang merupakan sikap tepat ketika mengikuti musyawarah adalah ....",
+                options: {
+                    a: "mendengarkan pendapat peserta lain",
+                    b: "memotong pembicaraan orang lain",
+                    c: "mengejek usulan yang berbeda",
+                    d: "memaksakan kehendak sendiri"
+                }
+            },
+            {
+                number: 11,
+                question: "Setelah pemungutan suara dilakukan, pilihan yang memperoleh suara terbanyak menjadi ....",
+                options: {
+                    a: "pendapat yang harus diabaikan",
+                    b: "usulan yang harus dibicarakan kembali tanpa alasan",
+                    c: "pendapat pribadi ketua musyawarah",
+                    d: "keputusan yang diterima bersama"
+                }
+            },
+            {
+                number: 12,
+                question: "Mengapa peserta musyawarah harus menerima hasil pemungutan suara?",
+                options: {
+                    a: "Karena pendapat peserta yang kalah tidak penting.",
+                    b: "Karena keputusan bersama harus dihargai meskipun tidak sesuai keinginan pribadi.",
+                    c: "Karena peserta tidak boleh memiliki pendapat sendiri.",
+                    d: "Karena pendapat yang menang selalu paling benar dalam segala hal."
+                }
+            },
+            {
+                number: 13,
+                question: "Rani mengusulkan kegiatan kerja bakti pada hari Sabtu. Namun, sebagian besar peserta memilih hari Minggu. Sikap Rani yang tepat adalah ....",
+                options: {
+                    a: "tetap memaksa agar kegiatan dilaksanakan hari Sabtu",
+                    b: "marah kepada peserta yang memilih hari Minggu",
+                    c: "menerima hasil keputusan dan ikut melaksanakan kegiatan",
+                    d: "tidak mau mengikuti kegiatan kerja bakti"
+                }
+            },
+            {
+                number: 14,
+                question: "Salah satu akibat jika peserta tidak mau menerima keputusan bersama adalah ....",
+                options: {
+                    a: "kerja sama dapat terganggu",
+                    b: "hubungan antar peserta semakin baik",
+                    c: "kegiatan pasti berjalan lancar",
+                    d: "semua peserta menjadi lebih kompak"
+                }
+            },
+            {
+                number: 15,
+                question: "Menghargai pendapat yang berbeda dapat membantu ....",
+                options: {
+                    a: "memenangkan pendapat sendiri",
+                    b: "menghindari semua pembicaraan",
+                    c: "menghilangkan hak orang lain untuk berbicara",
+                    d: "menjaga hubungan baik antar peserta musyawarah"
+                }
+            },
+            {
+                number: 16,
+                intro: "Perhatikan beberapa tindakan berikut!",
+                listItems: [
+                    "Mendengarkan pendapat teman.",
+                    "Memaksakan pendapat sendiri.",
+                    "Menerima hasil pemungutan suara.",
+                    "Mengejek usulan peserta lain."
+                ],
+                question: "Tindakan yang sesuai dengan sikap bermusyawarah ditunjukkan oleh nomor ....",
+                options: {
+                    a: "1 dan 2",
+                    b: "1 dan 3",
+                    c: "2 dan 4",
+                    d: "3 dan 4"
+                }
+            },
+            {
+                number: 17,
+                question: "Dalam musyawarah kelas, sebagian siswa memilih kegiatan menanam pohon, sedangkan siswa lainnya memilih membersihkan kelas. Agar keputusan dapat ditentukan dengan baik, mereka sebaiknya ....",
+                options: {
+                    a: "mengikuti pilihan siswa yang paling banyak berbicara",
+                    b: "membatalkan seluruh kegiatan",
+                    c: "saling mengejek karena memiliki pilihan berbeda",
+                    d: "berusaha mencapai mufakat atau melakukan pemungutan suara jika mufakat belum tercapai"
+                }
+            },
+            {
+                number: 18,
+                question: "Setelah keputusan musyawarah ditetapkan, seluruh peserta sebaiknya ....",
+                options: {
+                    a: "melaksanakan keputusan dengan penuh tanggung jawab",
+                    b: "melaksanakan keputusan hanya jika sesuai keinginan pribadi",
+                    c: "meminta keputusan dibatalkan",
+                    d: "mengabaikan hasil musyawarah"
+                }
+            },
+            {
+                number: 19,
+                question: "Berikut ini yang bukan merupakan aturan yang baik dalam musyawarah adalah ....",
+                options: {
+                    a: "setiap peserta mendapat kesempatan menyampaikan pendapat",
+                    b: "peserta mendengarkan orang yang sedang berbicara",
+                    c: "peserta boleh memaksakan pendapat agar dipilih",
+                    d: "peserta menghargai pendapat yang berbeda"
+                }
+            },
+            {
+                number: 20,
+                question: "Mengapa setiap peserta perlu diberi kesempatan menyampaikan pendapat?",
+                options: {
+                    a: "Agar musyawarah berlangsung lebih lama.",
+                    b: "Agar semua peserta dapat menyampaikan gagasan dan pertimbangannya.",
+                    c: "Agar hanya pendapat tertentu yang didengar.",
+                    d: "Agar keputusan selalu mengikuti pendapat ketua."
+                }
+            },
+            {
+                number: 21,
+                intro: "Perhatikan peristiwa berikut!",
+                callout: "Dalam pemungutan suara, pilihan A memperoleh 12 suara, pilihan B memperoleh 8 suara, dan pilihan C memperoleh 5 suara.",
+                question: "Pilihan yang menjadi keputusan berdasarkan suara terbanyak adalah ....",
+                options: {
+                    a: "pilihan A",
+                    b: "pilihan B",
+                    c: "pilihan C",
+                    d: "semua pilihan"
+                }
+            },
+            {
+                number: 22,
+                question: "Edo tidak setuju dengan hasil pemungutan suara. Namun, ia tetap membantu melaksanakan kegiatan yang telah diputuskan. Sikap Edo menunjukkan ....",
+                options: {
+                    a: "tidak memiliki pendapat sendiri",
+                    b: "takut menyampaikan pendapat",
+                    c: "ingin menghindari teman-temannya",
+                    d: "tanggung jawab dan sikap menghargai keputusan bersama"
+                }
+            },
+            {
+                number: 23,
+                question: "Jika seorang peserta mengejek teman yang usulannya tidak terpilih, tindakan tersebut dapat menyebabkan ....",
+                options: {
+                    a: "peserta lebih berani menyampaikan pendapat",
+                    b: "hubungan antar peserta menjadi kurang baik",
+                    c: "keputusan lebih mudah diterima",
+                    d: "musyawarah berlangsung semakin tertib"
+                }
+            },
+            {
+                number: 24,
+                intro: "Perhatikan aturan berikut!",
+                listItems: [
+                    "Menghormati pendapat peserta lain.",
+                    "Mendengarkan orang yang sedang berbicara.",
+                    "Memaksakan kehendak sendiri.",
+                    "Melaksanakan keputusan bersama dengan tanggung jawab."
+                ],
+                question: "Aturan yang seharusnya diterapkan dalam musyawarah adalah ....",
+                options: {
+                    a: "1 dan 3",
+                    b: "2 dan 3",
+                    c: "1, 2, dan 4",
+                    d: "1, 2, 3, dan 4"
+                }
+            },
+            {
+                number: 25,
+                question: "Dalam sebuah musyawarah, pendapatmu tidak terpilih karena sebagian besar peserta memilih usulan lain. Apa tindakan terbaik yang seharusnya kamu lakukan?",
+                options: {
+                    a: "Menolak seluruh keputusan musyawarah.",
+                    b: "Mengajak teman-teman mengulang pemungutan suara sampai pilihanmu menang.",
+                    c: "Tidak mau bekerja sama dengan peserta yang berbeda pendapat.",
+                    d: "Menghargai keputusan, tetap bekerja sama, dan melaksanakan hasil kesepakatan dengan tanggung jawab."
+                }
+            }
+        ];
+
+        // Daftar pilihan durasi preset
+        const presetDurations = [
+            { label: "30 Detik", seconds: 30 },
+            { label: "45 Detik", seconds: 45 },
+            { label: "1 Menit", seconds: 60 },
+            { label: "1 Menit 30 Detik", seconds: 90 },
+            { label: "2 Menit", seconds: 120 },
+            { label: "2 Menit 30 Detik", seconds: 150 },
+            { label: "3 Menit", seconds: 180 },
+            { label: "4 Menit", seconds: 240 },
+            { label: "5 Menit", seconds: 300 }
+        ];
+
+        // State Aplikasi
+        let selectedDuration = 120; // Default 2 menit (120 detik)
+        let currentIndex = 0;
+        let remainingSeconds = 120;
+        let isPaused = false;
+        let isStarted = false;
+        let timerInterval = null;
+        let endTimestamp = null; // Untuk akurasi waktu berbasis system clock
+
+        // Inisialisasi saat halaman dimuat
+        window.onload = function() {
+            renderPresetButtons();
+            updateStartScreenInfo();
+        };
+
+        // Format detik menjadi MM:SS
+        function formatTimeMMSS(totalSec) {
+            const safeSec = Math.max(0, Math.ceil(totalSec));
+            const mins = Math.floor(safeSec / 60);
+            const secs = safeSec % 60;
+            return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        // Format total estimasi waktu
+        function formatTotalEstimate(totalSec) {
+            const mins = Math.floor(totalSec / 60);
+            const secs = totalSec % 60;
+            if (secs === 0) return `${mins} Menit`;
+            return `${mins} Menit ${secs} Detik`;
+        }
+
+        // Menampilkan notifikasi toast halus
+        let toastTimeout = null;
+        function showToast(msg) {
+            const toast = document.getElementById('toast-notification');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.textContent = msg;
+            toast.classList.remove('hidden');
+            
+            if (toastTimeout) clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Render tombol-tombol preset durasi di Halaman Pembuka & Modal
+        function renderPresetButtons() {
+            const startContainer = document.getElementById('preset-buttons-start');
+            const modalContainer = document.getElementById('preset-buttons-modal');
+            
+            startContainer.innerHTML = '';
+            modalContainer.innerHTML = '';
+
+            presetDurations.forEach(preset => {
+                const isSelected = selectedDuration === preset.seconds;
+                
+                // Tombol untuk halaman pembuka
+                const btnStart = document.createElement('button');
+                btnStart.type = 'button';
+                btnStart.textContent = preset.label;
+                btnStart.className = `px-3 py-2.5 rounded-xl font-heading font-bold text-xs sm:text-sm border-2 transition cursor-pointer ${
+                    isSelected 
+                    ? 'bg-navy text-white border-navy shadow-md' 
+                    : 'bg-white text-navy border-slate-200 hover:border-skyblue'
+                }`;
+                btnStart.onclick = () => selectDuration(preset.seconds, false);
+                startContainer.appendChild(btnStart);
+
+                // Tombol untuk modal saat penayangan berlangsung
+                const btnModal = document.createElement('button');
+                btnModal.type = 'button';
+                btnModal.textContent = preset.label;
+                btnModal.className = `px-3 py-2.5 rounded-xl font-heading font-bold text-xs sm:text-sm border-2 transition cursor-pointer ${
+                    isSelected 
+                    ? 'bg-navy text-white border-navy shadow-md' 
+                    : 'bg-slate-50 text-navy border-slate-200 hover:border-skyblue'
+                }`;
+                btnModal.onclick = () => selectDuration(preset.seconds, true);
+                modalContainer.appendChild(btnModal);
+            });
+        }
+
+        // Memilih durasi baru
+        function selectDuration(seconds, fromModal = false) {
+            if (seconds < 5) {
+                showToast("Durasi minimal adalah 5 detik.");
+                return;
+            }
+            selectedDuration = seconds;
+
+            // Sinkronkan nilai input manual
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            document.getElementById('start-manual-min').value = mins;
+            document.getElementById('start-manual-sec').value = secs;
+            document.getElementById('modal-manual-min').value = mins;
+            document.getElementById('modal-manual-sec').value = secs;
+
+            renderPresetButtons();
+            updateStartScreenInfo();
+
+            if (fromModal && isStarted) {
+                resetCurrentTimer();
+                closeTimeSettingsModal();
+                showToast(`Durasi diubah menjadi ${formatTimeMMSS(selectedDuration)} per soal.`);
+            } else {
+                showToast(`Durasi diatur: ${formatTimeMMSS(selectedDuration)} per soal.`);
+            }
+        }
+
+        // Terapkan durasi manual dari halaman pembuka
+        function applyStartManualDuration() {
+            const mins = parseInt(document.getElementById('start-manual-min').value, 10) || 0;
+            const secs = parseInt(document.getElementById('start-manual-sec').value, 10) || 0;
+            const total = (mins * 60) + secs;
+            if (total <= 0) {
+                showToast("Masukkan durasi waktu lebih dari 0 detik.");
+                return;
+            }
+            selectDuration(total, false);
+        }
+
+        // Terapkan durasi manual dari modal saat tayang
+        function applyModalManualDuration() {
+            const mins = parseInt(document.getElementById('modal-manual-min').value, 10) || 0;
+            const secs = parseInt(document.getElementById('modal-manual-sec').value, 10) || 0;
+            const total = (mins * 60) + secs;
+            if (total <= 0) {
+                showToast("Masukkan durasi waktu lebih dari 0 detik.");
+                return;
+            }
+            selectDuration(total, true);
+        }
+
+        // Update ringkasan informasi di halaman pembuka
+        function updateStartScreenInfo() {
+            const totalQ = questionsData.length;
+            document.getElementById('info-total-questions').textContent = `${totalQ} Soal`;
+            document.getElementById('info-duration-per-q').textContent = formatTimeMMSS(selectedDuration);
+            document.getElementById('info-total-time').textContent = formatTotalEstimate(totalQ * selectedDuration);
+        }
+
+        // Mulai penayangan soal
+        function startPresentation() {
+            isStarted = true;
+            currentIndex = 0;
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            
+            loadQuestion(0);
+        }
+
+        // Memuat soal berdasarkan indeks
+        function loadQuestion(index) {
+            currentIndex = index;
+            const q = questionsData[currentIndex];
+            const totalQ = questionsData.length;
+
+            // Animasi kartu soal
+            const card = document.getElementById('question-card');
+            card.classList.remove('fade-in');
+            void card.offsetWidth; // trigger reflow
+            card.classList.add('fade-in');
+
+            // Update Nomor Soal
+            document.getElementById('question-number-badge').textContent = `Soal Nomor ${q.number}`;
+
+            // Render Teks Pertanyaan (termasuk daftar bernomor atau kotak bacaan jika ada)
+            const qContainer = document.getElementById('question-text-container');
+            let htmlContent = '';
+
+            if (q.intro) {
+                htmlContent += `<p class="mb-3">${q.intro}</p>`;
+            }
+
+            if (q.listItems && q.listItems.length > 0) {
+                htmlContent += `<ol class="list-decimal list-inside bg-softcream border-l-4 border-sunyellow rounded-r-2xl p-4 sm:p-5 mb-4 space-y-1.5 text-lg sm:text-xl lg:text-2xl font-semibold text-navy">`;
+                q.listItems.forEach(item => {
+                    htmlContent += `<li>${item}</li>`;
+                });
+                htmlContent += `</ol>`;
+            }
+
+            if (q.callout) {
+                htmlContent += `<div class="bg-softcream border-l-4 border-skyblue rounded-r-2xl p-4 sm:p-5 mb-4 text-lg sm:text-xl lg:text-2xl font-semibold text-navy">${q.callout}</div>`;
+            }
+
+            htmlContent += `<p>${q.question}</p>`;
+            qContainer.innerHTML = htmlContent;
+
+            // Render Pilihan Jawaban A, B, C, D
+            const optionsGrid = document.getElementById('options-grid');
+            optionsGrid.innerHTML = '';
+
+            const optionKeys = ['a', 'b', 'c', 'd'];
+            optionKeys.forEach(key => {
+                const optionCard = document.createElement('div');
+                optionCard.className = "flex items-start gap-4 p-4 sm:p-5 rounded-2xl border-2 border-slate-200 bg-softcream/40 hover:border-skyblue hover:bg-skyblue/5 transition-all";
+                
+                optionCard.innerHTML = `
+                    <span class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-navy text-white font-heading font-extrabold text-lg sm:text-xl flex items-center justify-center shrink-0 uppercase shadow-sm">
+                        ${key}
+                    </span>
+                    <span class="text-lg sm:text-xl lg:text-2xl font-semibold text-darktext leading-snug pt-1 sm:pt-1.5">
+                        ${q.options[key]}
+                    </span>
+                `;
+                optionsGrid.appendChild(optionCard);
+            });
+
+            // Update Progress Bar & Indikator
+            const currentNumStr = String(currentIndex + 1).padStart(2, '0');
+            const totalNumStr = String(totalQ).padStart(2, '0');
+            const percent = Math.round(((currentIndex + 1) / totalQ) * 100);
+
+            document.getElementById('progress-label').textContent = `SOAL ${currentNumStr} DARI ${totalNumStr}`;
+            document.getElementById('progress-bar').style.width = `${percent}%`;
+            document.getElementById('progress-percent').textContent = `${percent}%`;
+
+            // Update status tombol Sebelumnya & Selanjutnya
+            document.getElementById('btn-prev').disabled = (currentIndex === 0);
+            document.getElementById('btn-next').disabled = (currentIndex === totalQ - 1);
+
+            // Reset & mulai timer untuk soal ini
+            resetCurrentTimer();
+        }
+
+        // Mengatur ulang timer untuk soal saat ini
+        function resetCurrentTimer() {
+            stopTimerInterval();
+            remainingSeconds = selectedDuration;
+            isPaused = false;
+            updatePauseResumeButtonUI();
+            updateTimerDisplay();
+            startTimerInterval();
+        }
+
+        // Menjalankan interval timer akurat berbasis timestamp
+        function startTimerInterval() {
+            stopTimerInterval();
+            endTimestamp = Date.now() + (remainingSeconds * 1000);
+
+            timerInterval = setInterval(() => {
+                if (isPaused) return;
+
+                const now = Date.now();
+                const diffMs = endTimestamp - now;
+                remainingSeconds = Math.ceil(diffMs / 1000);
+
+                if (remainingSeconds <= 0) {
+                    remainingSeconds = 0;
+                    updateTimerDisplay();
+                    stopTimerInterval();
+                    handleTimeUp();
+                } else {
+                    updateTimerDisplay();
+                }
+            }, 200); // Pengecekan setiap 200ms agar transisi detik sangat presisi
+        }
+
+        function stopTimerInterval() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+
+        // Update tampilan visual timer & warna peringatan
+        function updateTimerDisplay() {
+            const display = document.getElementById('timer-display');
+            const box = document.getElementById('timer-box');
+            display.textContent = formatTimeMMSS(remainingSeconds);
+
+            // Reset kelas warna & animasi
+            box.classList.remove('bg-skyblue', 'bg-warmorange', 'bg-alertred', 'timer-urgent');
+
+            if (remainingSeconds > 30) {
+                // Lebih dari 30 detik: Biru
+                box.classList.add('bg-skyblue');
+            } else if (remainingSeconds >= 16 && remainingSeconds <= 30) {
+                // Sisa 30 sampai 16 detik: Oranye
+                box.classList.add('bg-warmorange');
+            } else if (remainingSeconds >= 1 && remainingSeconds <= 15) {
+                // Sisa 15 sampai 1 detik: Merah + berkedip halus
+                box.classList.add('bg-alertred', 'timer-urgent');
+            } else {
+                box.classList.add('bg-alertred');
+            }
+        }
+
+        // Ketika waktu habis (00:00)
+        function handleTimeUp() {
+            if (currentIndex < questionsData.length - 1) {
+                loadQuestion(currentIndex + 1);
+            } else {
+                showEndScreen();
+            }
+        }
+
+        // Navigasi Manual: Soal Sebelumnya
+        function prevQuestion() {
+            if (currentIndex > 0) {
+                loadQuestion(currentIndex - 1);
+            }
+        }
+
+        // Navigasi Manual: Soal Selanjutnya
+        function nextQuestion() {
+            if (currentIndex < questionsData.length - 1) {
+                loadQuestion(currentIndex + 1);
+            }
+        }
+
+        // Tombol Jeda / Lanjutkan
+        function togglePauseResume() {
+            if (isPaused) {
+                // Lanjutkan dari sisa waktu
+                isPaused = false;
+                endTimestamp = Date.now() + (remainingSeconds * 1000);
+                startTimerInterval();
+            } else {
+                // Jeda timer
+                isPaused = true;
+                stopTimerInterval();
+            }
+            updatePauseResumeButtonUI();
+        }
+
+        function updatePauseResumeButtonUI() {
+            const btn = document.getElementById('btn-pause-resume');
+            const text = document.getElementById('text-pause-resume');
+            const icon = document.getElementById('icon-pause');
+            const badge = document.getElementById('paused-badge');
+
+            if (isPaused) {
+                btn.classList.remove('bg-warmorange', 'hover:bg-warmorange/90');
+                btn.classList.add('bg-leafgreen', 'hover:bg-leafgreen/90');
+                text.textContent = 'LANJUTKAN';
+                badge.classList.remove('hidden');
+                icon.innerHTML = `<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>`;
+            } else {
+                btn.classList.remove('bg-leafgreen', 'hover:bg-leafgreen/90');
+                btn.classList.add('bg-warmorange', 'hover:bg-warmorange/90');
+                text.textContent = 'JEDA';
+                badge.classList.add('hidden');
+                icon.innerHTML = `<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>`;
+            }
+        }
+
+        // Modal Pengaturan Waktu saat penayangan berlangsung
+        function openTimeSettingsModal() {
+            renderPresetButtons();
+            document.getElementById('time-modal').classList.remove('hidden');
+        }
+
+        function closeTimeSettingsModal() {
+            document.getElementById('time-modal').classList.add('hidden');
+        }
+
+        // Tampilkan Halaman Penutup
+        function showEndScreen() {
+            stopTimerInterval();
+            isStarted = false;
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.remove('hidden');
+        }
+
+        // Tombol Halaman Penutup: Lihat Kembali Soal
+        function reviewQuestions() {
+            isStarted = true;
+            document.getElementById('end-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            loadQuestion(0);
+        }
+
+        // Tombol Halaman Penutup: Kembali ke Awal
+        function backToStart() {
+            stopTimerInterval();
+            isStarted = false;
+            document.getElementById('end-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('start-screen').classList.remove('hidden');
+            updateStartScreenInfo();
+        }
+
+        // Tombol Halaman Penutup: Selesai
+        function finishSession() {
+            if (document.fullscreenElement) {
+                document.exitFullscreen().catch(() => {});
+            }
+            showToast("Sesi penayangan soal telah selesai. Terima kasih!");
+        }
+
+        // Mode Fullscreen untuk LCD Proyektor
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => {
+                    showToast("Browser membatasi mode layar penuh otomatis. Tekan F11 pada keyboard.");
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen().catch(() => {});
+                }
+            }
+        }
+
+        // Dukungan navigasi keyboard (Panah Kiri/Kanan & Spasi untuk Jeda)
+        document.addEventListener('keydown', (e) => {
+            if (!isStarted) return;
+            // Abaikan jika sedang mengetik di input modal
+            if (document.activeElement.tagName === 'INPUT') return;
+
+            if (e.key === 'ArrowRight') {
+                nextQuestion();
+            } else if (e.key === 'ArrowLeft') {
+                prevQuestion();
+            } else if (e.key === ' ') {
+                e.preventDefault();
+                togglePauseResume();
+            }
+        });
+    </script>
+</body>
+</html>
